@@ -1,8 +1,9 @@
 package com.sds.recipe.controlers;
 
 import com.sds.recipe.models.Recipe;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.sds.recipe.repositories.RecipeJpaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -10,25 +11,36 @@ import java.util.List;
 @RequestMapping("api/v1/recipes")
 public class RecipeRestController {
 
+    @Autowired
+    private RecipeJpaRepository jpaRepository;
+
+    @GetMapping("")
     public List<Recipe> listRecipes(){
-        return null;
+        return jpaRepository.findAll();
     }
 
-    public Recipe getRecipe(Long id){
-        return null;
+    @GetMapping("/{id}")
+    public Recipe getRecipe(@PathVariable Long id){
+        return jpaRepository.getReferenceById(id);
     }
 
-    public Recipe createRecipe(Recipe recipe){
+    @PostMapping("")
+    public Recipe createRecipe(@RequestBody Recipe recipe){
 
-        return null;
+        return jpaRepository.save(recipe);
     }
 
-    public Recipe updateRecipe(Recipe recipe){
-        return null;
+    @PutMapping("/{id}")
+    public Recipe updateRecipe( @PathVariable Long id, @RequestBody Recipe recipe){
+        Recipe r = jpaRepository.getReferenceById(id);
+        r.setName(recipe.getName());
+        r.setDescription(recipe.getDescription());
+        return jpaRepository.save(r);
     }
 
-    public void deleteRecipe(Long id){
-
+    @DeleteMapping("/{id}")
+    public void deleteRecipe(@PathVariable Long id){
+        jpaRepository.deleteById(id);
     }
 
 }
