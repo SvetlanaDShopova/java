@@ -8,6 +8,12 @@ import java.util.Arrays;
  * At some point there will be a list of length one, considered a sorted list
  * then merge the sorted lists together to get the fully sorted list
  *
+ * time complexity - O(NLogN)
+ * space complexity - O(N)
+ *
+ * It is not adaptive
+ *
+ * Stable sort
  */
 public class MergeSort {
     private static int listToSort[] = new int[] {5, 4, 6, 2, 1, 10, 7, 3, 8, 9};
